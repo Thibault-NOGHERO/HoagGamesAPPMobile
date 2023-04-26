@@ -18,6 +18,8 @@ import TheWelcome from "./components/TheWelcome.vue";
     </div>
   </header>
 
+  <RouterView></RouterView>
+
   <main>
     <TheWelcome />
   </main>

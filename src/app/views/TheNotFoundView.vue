@@ -1,6 +1,6 @@
 <template>
   <TheNotFoundTemplate>
-    <span> </span>
+    <span> You're lost </span>
   </TheNotFoundTemplate>
 </template>
 

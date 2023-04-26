@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import NotFoundView from "@/app/views/TheNotFoundView.vue";
 import appRoutes from "@/app/routes";
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(),
   routes: [
     ...appRoutes,
