@@ -1,6 +1,7 @@
-<script setup lang="ts"></script>
-
 <template>
+  <div class="background-color">
+    <ovalDiv></ovalDiv>
+  </div>
   <header></header>
 
   <RouterView></RouterView>
@@ -9,6 +10,6 @@
   <footer></footer>
 </template>
 
-<script setup lang="ts"></script>
-
-<style></style>
+<script setup lang="ts">
+import ovalDiv from "@/assets/decoFiles/ovalDiv.vue";
+</script>

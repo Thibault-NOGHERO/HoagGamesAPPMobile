@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>testsplashscreen</div>
 </template>
 
 <script></script>
