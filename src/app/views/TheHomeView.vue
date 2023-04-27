@@ -2,7 +2,11 @@
   <TheHomeTemplate>
     <template #title>
       <!-- {{ $t('component.TheHomeView.welcome', { appName })  }} -->
-      tiltle
+      HOAG Games
     </template>
   </TheHomeTemplate>
 </template>
+
+<script setup lang="ts">
+import TheHomeTemplate from "@/app/components/templates/TheHomeTemplate.vue";
+</script>

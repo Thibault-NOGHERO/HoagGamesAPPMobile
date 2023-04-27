@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import TheNotFoundTemplate from "../components/templates/TheNotFoundTemplate.vue";
+import TheNotFoundTemplate from "@/app/components/templates/TheNotFoundTemplate.vue";
 </script>
