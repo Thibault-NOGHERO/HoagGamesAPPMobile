@@ -1,3 +1,14 @@
+<template>
+  <div class="background-color TheDeco">
+    <ovalDiv
+      v-for="index in ovalDivCount"
+      :key="index"
+      :class="getClassForOvalDiv(index)"
+    ></ovalDiv>
+  </div>
+</template>
+
+<script lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import ovalDiv from "@/assets/decoFiles/ovalDiv.vue";
 
@@ -20,7 +31,7 @@ const ovalDivCount = computed(() => (windowWidth.value > 600 ? 2 : 1));
 const getClassForOvalDiv = (index: number) => {
   const positionClass =
     windowWidth.value > 600 ? "position-" + (index + 1) : "";
-  const parityClass = index % 2 === 0 ? "left" : "right";
+  const parityClass = index % 2 === 0 ? "rightOval" : "leftOval";
   return `${positionClass} ${parityClass}`;
 };
 
@@ -35,3 +46,12 @@ export default {
     };
   },
 };
+</script>
+
+<style lang="scss">
+.TheDeco {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+</style>

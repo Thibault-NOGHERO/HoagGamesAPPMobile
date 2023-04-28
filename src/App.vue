@@ -1,11 +1,5 @@
 <template>
-  <div class="background-color">
-    <ovalDiv
-      v-for="index in ovalDivCount"
-      :key="index"
-      :class="getClassForOvalDiv(index)"
-    ></ovalDiv>
-  </div>
+  <TheDeco></TheDeco>
   <header></header>
 
   <RouterView></RouterView>
@@ -14,4 +8,6 @@
   <footer></footer>
 </template>
 
-<script lang="ts" src="./App.ts"></script>
+<script setup lang="ts">
+import TheDeco from "@/assets/decoFiles/TheDeco.vue";
+</script>
