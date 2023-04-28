@@ -1,6 +1,10 @@
 <template>
   <div class="background-color">
-    <ovalDiv></ovalDiv>
+    <ovalDiv
+      v-for="index in ovalDivCount"
+      :key="index"
+      :class="getClassForOvalDiv(index)"
+    ></ovalDiv>
   </div>
   <header></header>
 
@@ -10,6 +14,4 @@
   <footer></footer>
 </template>
 
-<script setup lang="ts">
-import ovalDiv from "@/assets/decoFiles/ovalDiv.vue";
-</script>
+<script lang="ts" src="./App.ts"></script>

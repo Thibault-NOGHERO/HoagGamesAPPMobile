@@ -5,7 +5,7 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-@import "@/assets/scss/mixins";
+@import "@/assets/scss/_mixins.scss";
 
 .some-class {
   @include backgroundOval;
