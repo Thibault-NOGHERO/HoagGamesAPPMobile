@@ -9,5 +9,6 @@
 
 .some-class {
   @include backgroundOval;
+  overflow-x: hidden;
 }
 </style>
