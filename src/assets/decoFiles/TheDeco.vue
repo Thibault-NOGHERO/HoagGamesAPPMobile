@@ -41,10 +41,11 @@ export default {
     };
 
     const getOvalDivSettings = () => {
-      let count = props.ovalDivCount;
+      const divsPerHeight = Math.floor(windowHeight.value / 300);
+      let count = 2; // Pour les divs "right" et "left"
 
       if (windowWidth.value >= 1000) {
-        count += 1;
+        count += 2 * divsPerHeight; // Ajoute des divs centraux en fonction de la hauteur
       }
 
       return count;
