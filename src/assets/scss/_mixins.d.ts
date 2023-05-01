@@ -1,0 +1,11 @@
+export const backgroundOval = `
+  position: fixed;
+  width: 556.96px;
+  height: 246.44px;
+  background: linear-gradient(180deg, rgba(255, 0, 0, 0.15) 0%, rgba(255, 0, 0, 0) 100%);
+  filter: blur(40px);
+  transform: rotate(-28.45deg);
+  overflow: hidden;
+  border-radius: 100%;
+  top: getPositionHeight($positionClass, $ovalDivCount, $windowHeight) + "%";
+`;
