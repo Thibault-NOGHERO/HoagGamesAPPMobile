@@ -41,14 +41,7 @@ export default {
     };
 
     const getOvalDivSettings = () => {
-      const divsPerHeight = Math.floor(windowHeight.value / 300);
-      const divsPerWidth = Math.floor(windowWidth.value / 300);
-
-      let count = divsPerHeight * divsPerWidth;
-
-      if (count < 2) {
-        count = 2;
-      }
+      let count = props.ovalDivCount;
 
       if (windowWidth.value >= 1000) {
         count += 1;
