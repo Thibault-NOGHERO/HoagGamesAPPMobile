@@ -4,6 +4,7 @@
       v-for="index in ovalDivCount"
       :key="index"
       :class="getClassForOvalDiv(index)"
+      :style="getTopPosition(index)"
     ></ovalDiv>
   </div>
 </template>
@@ -50,7 +51,21 @@ export default {
       window.removeEventListener("orientationchange", resetWindowWidth);
     });
 
-    const ovalDivCount = computed(() => (windowWidth.value > 600 ? 2 : 1));
+    const getOvalDivSettings = () => {
+      let count;
+
+      if (windowWidth.value > 900) {
+        count = 4;
+      } else if (windowWidth.value > 600) {
+        count = 3;
+      } else {
+        count = 2;
+      }
+
+      return count;
+    };
+
+    const ovalDivCount = computed(() => getOvalDivSettings());
 
     const getClassForOvalDiv = (index: number) => {
       const positionClass =
@@ -59,10 +74,29 @@ export default {
       return `${positionClass} ${parityClass}`;
     };
 
+    const getTopPosition = (index: number) => {
+      const mavariablecalculer = calculateTopPosition(index);
+
+      return {
+        top: `${mavariablecalculer}px`,
+      };
+    };
+
+    const calculateTopPosition = (index: number) => {
+      const ovalDivClass = getClassForOvalDiv(index);
+
+      if (ovalDivClass.includes("right")) {
+        return (index - 1) * 300;
+      } else {
+        return (index - 1) * 400;
+      }
+    };
+
     return {
       ovalDivCount,
       getClassForOvalDiv,
       isLandscape,
+      getTopPosition,
     };
   },
 };
