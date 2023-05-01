@@ -1,26 +1,31 @@
 <template>
   <div class="background-color TheDeco">
     <ovalDiv
-      v-for="index in ovalDivCount"
+      v-for="index in ovalDivIndices"
       :key="index"
       :class="getClassForOvalDiv(index)"
-      :style="getTopPosition(index)"
+      :style="getPosition(index)"
     ></ovalDiv>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, watchEffect } from "vue";
 import ovalDiv from "@/assets/decoFiles/ovalDiv.vue";
 
 export default {
   components: {
     ovalDiv,
   },
-  setup() {
+  props: {
+    ovalDivCount: {
+      type: Number,
+      default: 4,
+    },
+  },
+  setup(props) {
     const windowWidth = ref(window.innerWidth);
     const windowHeight = ref(window.innerHeight);
-    const isLandscape = computed(() => windowWidth.value > windowHeight.value);
 
     const onResize = () => {
       windowWidth.value = window.innerWidth;
@@ -35,7 +40,32 @@ export default {
       windowWidth.value = window.innerWidth;
     };
 
+    const getOvalDivSettings = () => {
+      const divsPerHeight = Math.floor(windowHeight.value / 300);
+      const divsPerWidth = Math.floor(windowWidth.value / 300);
+
+      let count = divsPerHeight * divsPerWidth;
+
+      if (count < 2) {
+        count = 2;
+      }
+
+      if (windowWidth.value >= 1000) {
+        count += 1;
+      }
+
+      return count;
+    };
+
+    const ovalDivIndices = ref<number[]>([]);
+
+    const updateOvalDivIndices = () => {
+      const count = getOvalDivSettings();
+      ovalDivIndices.value = Array.from({ length: count }, (_, i) => i);
+    };
+
     onMounted(() => {
+      updateOvalDivIndices();
       window.addEventListener("resize", onResize);
       window.addEventListener("orientationchange", onResize);
       document.addEventListener("DOMContentLoaded", onResize);
@@ -51,59 +81,61 @@ export default {
       window.removeEventListener("orientationchange", resetWindowWidth);
     });
 
-    const getOvalDivSettings = () => {
-      let count;
-
-      if (windowWidth.value > 900) {
-        count = 4;
-      } else if (windowWidth.value > 600) {
-        count = 3;
-      } else {
-        count = 2;
-      }
-
-      return count;
-    };
-
-    const ovalDivCount = computed(() => getOvalDivSettings());
+    watchEffect(() => {
+      updateOvalDivIndices();
+    });
 
     const getClassForOvalDiv = (index: number) => {
-      const positionClass =
-        windowWidth.value > 600 ? "position-" + (index + 1) : "";
+      if (windowWidth.value >= 1000) {
+        if (index >= ovalDivIndices.value.length - 2) {
+          return "centerOval";
+        }
+      }
+
+      const positionClass = windowHeight.value > 600 ? "position-" + index : "";
       const parityClass = index % 2 === 0 ? "rightOval" : "leftOval";
+
       return `${positionClass} ${parityClass}`;
-    };
-
-    const getTopPosition = (index: number) => {
-      const mavariablecalculer = calculateTopPosition(index);
-
-      return {
-        top: `${mavariablecalculer}px`,
-      };
     };
 
     const calculateTopPosition = (index: number) => {
       const ovalDivClass = getClassForOvalDiv(index);
 
       if (ovalDivClass.includes("right")) {
-        return (index - 1) * 300;
-      } else {
-        return (index - 1) * 400;
+        return index * 300;
+      } else if (ovalDivClass.includes("left")) {
+        return index * 400;
+      } else if (ovalDivClass.includes("centerOval")) {
+        const centerIndex = index - (ovalDivIndices.value.length - 2);
+        return centerIndex * 350;
       }
     };
 
+    const calculateLeftPosition = (index: number) => {
+      const ovalDivClass = getClassForOvalDiv(index);
+
+      if (ovalDivClass.includes("centerOval")) {
+        return (windowWidth.value - 300) / 2;
+      } else {
+        return "";
+      }
+    };
+
+    const getPosition = (index: number) => {
+      const top = calculateTopPosition(index);
+      const left = calculateLeftPosition(index);
+
+      return {
+        top: `${top}px`,
+        left: `${left}px`,
+      };
+    };
+
     return {
-      ovalDivCount,
+      ovalDivIndices,
       getClassForOvalDiv,
-      isLandscape,
-      getTopPosition,
+      getPosition,
     };
   },
 };
 </script>
-
-<style lang="scss">
-.TheDeco {
-  overflow-x: hidden;
-}
-</style>
