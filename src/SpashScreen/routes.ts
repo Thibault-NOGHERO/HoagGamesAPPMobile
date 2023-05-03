@@ -1,4 +1,4 @@
-import splashscreen from "@/SpashScreen/components/TitleSpashScreen.vue";
+import splashscreen from "@/SpashScreen/components/TitleSpashScreenView.vue";
 
 export default [
   {

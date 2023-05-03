@@ -2,12 +2,17 @@
   <TheDeco></TheDeco>
   <header></header>
 
-  <RouterView></RouterView>
+  <router-view v-if="!isLoading" />
+  <Chargement v-else />
 
   <main></main>
   <footer></footer>
 </template>
 
 <script setup lang="ts">
-import TheDeco from "@/assets/decoFiles/TheDeco.vue";
+import { useStore } from "vuex";
+import Chargement from "@/assets/LoadingView.vue";
+
+const store = useStore();
+const isLoading = store.state.isLoading;
 </script>

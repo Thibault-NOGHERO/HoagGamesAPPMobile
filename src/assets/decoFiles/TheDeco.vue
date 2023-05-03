@@ -23,7 +23,7 @@ export default {
       default: 4,
     },
   },
-  setup(props) {
+  setup() {
     const windowWidth = ref(window.innerWidth);
     const windowHeight = ref(window.innerHeight);
 
