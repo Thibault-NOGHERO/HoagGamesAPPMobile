@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
 import Chargement from "@/assets/LoadingView.vue";
+import TheDeco from "@/assets/decoFiles/TheDeco.vue";
 
 const store = useStore();
 const isLoading = store.state.isLoading;
