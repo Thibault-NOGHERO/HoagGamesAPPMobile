@@ -30,28 +30,29 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 
-async function submitForm() {
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VUE_APP_API_URL}/inscription.php`,
-      {
-        username: username.value,
-        email: email.value,
-        password: password.value,
+const statusMessage = ref("");
+
+const submitForm = () => {
+  const data = {
+    username: username.value,
+    email: email.value,
+    password: password.value,
+  };
+  axios
+    .post("${import.meta.env.VUE_APP_API_URL}/inscription.php", data)
+    .then((response) => {
+      // Mettre à jour le message d'état en fonction de la réponse
+      statusMessage.value = response.data.message;
+      // Rediriger l'utilisateur seulement si l'inscription est réussie
+      if (response.data.success) {
+        router.push("/connexion");
       }
-    );
-
-    console.log(response); // Ajouté pour voir la réponse dans la console
-
-    if (response.data.success) {
-      alert("Inscription réussie !");
-      router.push("/connexion");
-    } else {
-      alert("Erreur lors de l'inscription : " + response.data.message);
-    }
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de la connexion au serveur.");
-  }
-}
+    })
+    .catch((error) => {
+      // Afficher un message d'erreur si la requête a échoué
+      console.error(error);
+      statusMessage.value =
+        "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+    });
+};
 </script>
