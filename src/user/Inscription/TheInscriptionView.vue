@@ -56,18 +56,33 @@ const formData: FormData = {
 
 const router: Router = useRouter();
 
-const signupProcess = () => {
-  axios
-    .post("${import.meta.env.VUE_APP_API_URL}/try/sinup_process.php", formData)
-    .then((response) => {
-      console.log(response);
-      router.push("/connexion");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+// const signupProcess = () => {
+//   axios
+//     .post(
+//       "http://localhost/testHoaggamesApp/API/try/sinup_process.php",
+//       formData
+//     )
+//     .then((response) => {
+//       console.log(response);
+//       router.push("/connexion");
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
+const signupProcess = () => {
+  axios({
+    method: "post",
+    url: "http://localhost/testHoaggamesApp/API/try/signup_process.php",
+    data: {
+      pseudo: "test",
+      email: "test@test.com",
+      password: "test",
+      password_confirm: "test",
+    },
+  });
+};
 const formIsValid = () => {
   return (
     formData.pseudo &&

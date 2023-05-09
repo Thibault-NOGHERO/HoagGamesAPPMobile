@@ -1,46 +1,49 @@
 <?php
-header('Content-Type: application/json');
 
-require_once('db.php');
+// Vérifie si les données ont été envoyées via la méthode POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  
+  // Récupère les données envoyées
+  $pseudo = $_POST["pseudo"] ?? "";
+  $email = $_POST["email"] ?? "";
+  $password = $_POST["password"] ?? "";
+  $password_confirm = $_POST["password_confirm"] ?? "";
+  
 
-// Récupération des données POST
-$pseudo = $_POST['pseudo'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-
-// Vérification des données
-if (empty($pseudo) || empty($email) || empty($password)) {
-  http_response_code(400); // Bad Request
-  echo json_encode(array('error' => 'Tous les champs sont requis.'));
-  exit();
+  header('Content-Type: application/json');
+  echo json_encode(["message" => "okidoki"]);
 }
-
-if (strlen($password) < 6) {
-  http_response_code(400); // Bad Request
-  echo json_encode(array('error' => 'Le mot de passe doit contenir au moins 6 caractères.'));
-  exit();
-}
-
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  http_response_code(400); // Bad Request
-  echo json_encode(array('error' => 'L\'adresse email est invalide.'));
-  exit();
-}
-
-// Insertion de l'utilisateur dans la base de données
-$conn = getDb();
-
-$sql = "INSERT INTO users (pseudo, email, password) VALUES ('$pseudo', '$email', '$password')";
-
-if ($conn->query($sql) === TRUE) {
-  $user_id = $conn->insert_id;
-  http_response_code(201); // Created
-  echo json_encode(array('id' => $user_id, 'pseudo' => $pseudo, 'email' => $email));
-} else {
-  http_response_code(500); // Internal Server Error
-  echo json_encode(array('error' => 'Une erreur est survenue lors de l\'inscription.'));
-}
-
-$conn->close();
-
 ?>
+
+  // Vérifie si toutes les données ont été envoyées
+  // if () {
+    
+    // Vérifie si les mots de passe correspondent
+    // if ($password === $password_confirm) {
+      
+      // TODO: Ajoutez le code ici pour enregistrer les données dans une base de données ou un autre endroit de stockage
+        
+      // Envoie une réponse JSON avec un message "ok"
+      // header('Content-Type: application/json');
+      // echo json_encode(["message" => "okidoki"]);
+      
+    // } else {
+      // Les mots de passe ne correspondent pas
+      // Envoie une réponse JSON avec un message "error"
+    //   header('Content-Type: application/json');
+    //   echo json_encode(["message" => "error", "error_message" => "Les mots de passe ne correspondent pas."]);
+    // }
+    
+  // } else {
+    // Toutes les données n'ont pas été envoyées
+    // Envoie une réponse JSON avec un message "error"
+  //   header('Content-Type: application/json');
+  //   echo json_encode(["message" => "error", "error_message" => "Toutes les données n'ont pas été envoyées."]);
+  // }
+  
+// } else {
+  // La requête n'est pas une requête POST
+  // Envoie une réponse JSON avec un message "error"
+//   header('Content-Type: application/json');
+//   echo json_encode(["message" => "error", "error_message" => "La requête n'est pas une requête POST."]);
+// }
