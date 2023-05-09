@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, computed } from "vue";
-// import { Router, useRouter } from "vue-router";
+import { Router, useRouter } from "vue-router";
 
 const formData = ref({
   pseudo: "",
@@ -48,16 +48,14 @@ const formData = ref({
   password_confirm: "",
 });
 
-// const router: Router = useRouter();
+const router: Router = useRouter();
 
 const signupProcess = async () => {
   try {
-    const response = await axios.post(
-      "http://localhost/testHoaggamesApp/API/try/signup_process.php",
-      formData.value
-    );
+    const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/signup_process.php`;
+    const response = await axios.post(apiUrl, formData.value);
     console.log(response);
-    // router.push("/connexion");
+    router.push("/connexion");
   } catch (error) {
     console.log(error);
   }
