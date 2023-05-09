@@ -38,58 +38,50 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { Router, useRouter } from "vue-router";
+import { ref, computed } from "vue";
+// import { Router, useRouter } from "vue-router";
 
-interface FormData {
-  pseudo: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-}
-
-const formData: FormData = {
+const formData = ref({
   pseudo: "",
   email: "",
   password: "",
   password_confirm: "",
-};
+});
 
-const router: Router = useRouter();
+// const router: Router = useRouter();
+
+const signupProcess = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost/testHoaggamesApp/API/try/signup_process.php",
+      formData.value
+    );
+    console.log(response);
+    // router.push("/connexion");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // const signupProcess = () => {
-//   axios
-//     .post(
-//       "http://localhost/testHoaggamesApp/API/try/sinup_process.php",
-//       formData
-//     )
-//     .then((response) => {
-//       console.log(response);
-//       router.push("/connexion");
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
+//   axios({
+//     method: "post",
+//     url: "http://localhost/testHoaggamesApp/API/try/signup_process.php",
+//     data: {
+//       pseudo: "test",
+//       email: "test@test.com",
+//       password: "test",
+//       password_confirm: "test",
+//     },
+//   });
 // };
-
-const signupProcess = () => {
-  axios({
-    method: "post",
-    url: "http://localhost/testHoaggamesApp/API/try/signup_process.php",
-    data: {
-      pseudo: "test",
-      email: "test@test.com",
-      password: "test",
-      password_confirm: "test",
-    },
-  });
-};
-const formIsValid = () => {
+const formIsValid = computed(() => {
   return (
-    formData.pseudo &&
-    formData.email &&
-    formData.password &&
-    formData.password_confirm &&
-    formData.password === formData.password_confirm
+    formData.value.pseudo &&
+    formData.value.email &&
+    formData.value.password &&
+    formData.value.password_confirm &&
+    formData.value.password === formData.value.password_confirm
   );
-};
+});
 </script>
