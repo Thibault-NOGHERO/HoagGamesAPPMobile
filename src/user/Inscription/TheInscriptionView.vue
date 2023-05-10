@@ -50,10 +50,27 @@ const formData = ref({
 
 const router: Router = useRouter();
 
+// const signupProcess = async () => {
+//   try {
+//     const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/signup_process.php`;
+//     const response = await axios.post(apiUrl, formData.value);
+//     console.log(response);
+//     router.push("/connexion");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 const signupProcess = async () => {
   try {
     const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/signup_process.php`;
-    const response = await axios.post(apiUrl, formData.value);
+    const data = {
+      email: "test@test.com",
+      password: "test",
+      password_confirm: "test",
+      pseudo: "test",
+    };
+    const response = await axios.post(apiUrl, data);
     console.log(response);
     router.push("/connexion");
   } catch (error) {
