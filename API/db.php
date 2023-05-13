@@ -1,7 +1,7 @@
 <?php
 class Db {
     private $host = 'localhost';
-    private $db_name = ' testhoaggamesapp';
+    private $db_name = 'gaming';
     private $username = 'root';
     private $password = '';
     private $conn;

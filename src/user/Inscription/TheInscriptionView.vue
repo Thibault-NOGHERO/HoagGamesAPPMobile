@@ -1,15 +1,23 @@
 <template>
   <div id="signup-form">
     <form @submit.prevent="signupProcess">
-      <div class="form-group">
-        <label for="pseudo">Pseudo:</label>
-        <input type="text" v-model="formData.pseudo" id="pseudo" required />
+      <div class="hg-TheInscriptionView-element" @click="focusInput">
+        <div class="hg-TheInscriptionView-input">
+          <label for="pseudo">Pseudo : </label>
+          <input
+            type="text"
+            v-model="formData.pseudo"
+            id="pseudo"
+            ref="inputRef"
+            required
+          />
+        </div>
       </div>
-      <div class="form-group">
+      <div class="hg-TheInscriptionView-input">
         <label for="email">Email:</label>
         <input type="email" v-model="formData.email" id="email" required />
       </div>
-      <div class="form-group">
+      <div class="hg-TheInscriptionView-input">
         <label for="password">Mot de passe:</label>
         <input
           type="password"
@@ -18,7 +26,7 @@
           required
         />
       </div>
-      <div class="form-group">
+      <div class="hg-TheInscriptionView-input">
         <label for="password_confirm">Confirmer le mot de passe:</label>
         <input
           type="password"
@@ -27,7 +35,7 @@
           required
         />
       </div>
-      <div class="form-group">
+      <div class="">
         <button type="submit" class="button" :disabled="!formIsValid">
           S'inscrire
         </button>
@@ -38,7 +46,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { Router, useRouter } from "vue-router";
 
 const formData = ref({
@@ -50,25 +58,16 @@ const formData = ref({
 
 const router: Router = useRouter();
 
-// const signupProcess = async () => {
-//   try {
-//     const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/signup_process.php`;
-//     const response = await axios.post(apiUrl, formData.value);
-//     console.log(response);
-//     router.push("/connexion");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 const signupProcess = async () => {
   try {
     const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/signup_process.php`;
     const data = {
-      email: "test@test.com",
-      password: "test",
-      password_confirm: "test",
-      pseudo: "test",
+      pseudo: formData.value.pseudo,
+      email: formData.value.email,
+      password: formData.value.password,
+      password_confirm: formData.value.password_confirm,
+      // bio: "Je suis un nouvel utilisateur !", // Valeur par défaut pour bio
+      // plateform: "Aucune plateforme ajoutée pour le moment.", // Valeur par défaut pour plateform
     };
     const response = await axios.post(apiUrl, data);
     console.log(response);
@@ -78,18 +77,25 @@ const signupProcess = async () => {
   }
 };
 
-// const signupProcess = () => {
-//   axios({
-//     method: "post",
-//     url: "http://localhost/testHoaggamesApp/API/try/signup_process.php",
-//     data: {
-//       pseudo: "test",
-//       email: "test@test.com",
-//       password: "test",
-//       password_confirm: "test",
-//     },
-//   });
+// const signupProcess = async () => {
+//   try {
+//     const apiUrl = `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_URL_API}/test_connexion.php`;
+//     const data = {
+//       pseudo: formData.value.pseudo,
+//       email: formData.value.email,
+//       password: formData.value.password,
+//       password_confirm: formData.value.password_confirm,
+//       // bio: "Je suis un nouvel utilisateur !", // Valeur par défaut pour bio
+//       // plateform: "Aucune plateforme ajoutée pour le moment.", // Valeur par défaut pour plateform
+//     };
+//     const response = await axios.post(apiUrl, data);
+//     console.log(response);
+//     router.push("/connexion");
+//   } catch (error) {
+//     console.log(error);
+//   }
 // };
+
 const formIsValid = computed(() => {
   return (
     formData.value.pseudo &&
@@ -99,4 +105,46 @@ const formIsValid = computed(() => {
     formData.value.password === formData.value.password_confirm
   );
 });
+
+const inputRef = ref(null);
+
+const focusInput = () => {
+  if (inputRef.value) {
+    (inputRef.value as HTMLInputElement).focus();
+  }
+};
+
+onMounted(() => {
+  focusInput();
+});
 </script>
+
+<style lang="scss">
+.hg-TheInscriptionView {
+  &-input {
+    display: block;
+    border-radius: 100px;
+    border: 1px #999999 solid;
+    padding: 16px 24px;
+    width: 100%;
+
+    > label {
+      color: #aaaaaa;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    > input {
+      color: #aaaaaa;
+      width: 100%;
+    }
+  }
+  &-element {
+    padding: 46px;
+    display: flex;
+    justify-content: center;
+  }
+}
+</style>

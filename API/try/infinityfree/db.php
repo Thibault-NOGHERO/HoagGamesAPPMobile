@@ -1,9 +1,9 @@
 <?php
 function connectToDb() {
-    $host = 'localhost';
-    $db   = 'testhoaggamesapp';
-    $user = 'root';
-    $pass = '';
+    $host = 'sql100.epizy.com';
+    $db   = 'epiz_33753174_hoaggames';
+    $user = 'epiz_33753174';
+    $pass = '5CKiqyDsZP6F';
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

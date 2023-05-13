@@ -7,6 +7,8 @@ import loadingMixin from "./assets/TS/loadingmixins";
 // import "./assets/main.css";
 import "@/assets/scss/main.scss";
 
+import "typeface-inter";
+
 const app = createApp(App);
 
 app.mixin(loadingMixin); // Ajoutez le mixin ici
